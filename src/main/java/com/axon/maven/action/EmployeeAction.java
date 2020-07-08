@@ -1,96 +1,103 @@
 package com.axon.maven.action;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-
-import org.apache.struts2.interceptor.RequestAware;
-
 import com.axon.maven.entities.Employee;
 import com.axon.maven.service.DepartmentService;
 import com.axon.maven.service.EmployeeService;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 import com.opensymphony.xwork2.Preparable;
+import org.apache.struts2.interceptor.RequestAware;
 import org.joda.time.DateTime;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Controller;
 
+import java.util.List;
+import java.util.Map;
+
+@Controller("employeeAction")
+@Scope("prototype")
 public class EmployeeAction extends ActionSupport implements RequestAware, ModelDriven<Employee>, Preparable {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
 
-	private EmployeeService employeeService;
-	private DepartmentService departmentService;
 
-	private Integer id;
+    private EmployeeService employeeService;
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    private DepartmentService departmentService;
 
-	public void setEmployeeService(EmployeeService employeeService) {
-		this.employeeService = employeeService;
-	}
+    private Integer id;
 
-	public void setDepartmentService(DepartmentService departmentService) {
-		this.departmentService = departmentService;
-	}
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-	private Map<String, Object> request;
+    @Autowired
+    public void setEmployeeService(EmployeeService employeeService) {
+        this.employeeService = employeeService;
+    }
 
-	public String list() {
-		List<Employee> employees = employeeService.getAll();
-		request.put("employees", employees);
-		return "emp-list";
-	}
+    @Autowired
+    public void setDepartmentService(DepartmentService departmentService) {
+        this.departmentService = departmentService;
+    }
 
-	public String input() {
-		request.put("departments", departmentService.getAll());
-		return "emp-input";
-	}
+    private Map<String, Object> request;
 
-	public String delete() {
-		employeeService.delete(id);
-		return SUCCESS;
-	}
+    public String list() {
+        List<Employee> employees = employeeService.getAll();
+        request.put("employees", employees);
+        return "emp-list";
+    }
 
-	@Override
-	public void setRequest(Map<String, Object> arg0) {
-		this.request = arg0;
-	}
+    public String input() {
+        request.put("departments", departmentService.getAll());
+        return "emp-input";
+    }
 
-	public String save() {
-		if (id == null) {
-			model.setCreateTime(DateTime.now());
-		}
-		employeeService.saveOrUpdate(model);
-		return SUCCESS;
-	}
+    public String delete() {
+        employeeService.delete(id);
+        return SUCCESS;
+    }
 
-	public void prepareSave() {
-		if (id == null) {
-			model = new Employee();
-		} else {
-			model = employeeService.get(id);
-		}
-	}
+    @Override
+    public void setRequest(Map<String, Object> arg0) {
+        this.request = arg0;
+    }
 
-	public void prepareInput() {
-		if (id != null)
-			model = employeeService.get(id);
-	}
+    public String save() {
+        if (id == null) {
+            model.setCreateTime(DateTime.now());
+        }
+        employeeService.saveOrUpdate(model);
+        return SUCCESS;
+    }
 
-	@Override
-	public void prepare() throws Exception {
+    public void prepareSave() {
+        if (id == null) {
+            model = new Employee();
+        } else {
+            model = employeeService.get(id);
+        }
+    }
 
-	}
+    public void prepareInput() {
+        if (id != null)
+            model = employeeService.get(id);
+    }
 
-	private Employee model;
+    @Override
+    public void prepare() throws Exception {
 
-	@Override
-	public Employee getModel() {
-		return model;
-	}
+    }
+
+    private Employee model;
+
+    @Override
+    public Employee getModel() {
+        return model;
+    }
 }
