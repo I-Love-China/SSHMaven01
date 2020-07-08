@@ -1,6 +1,7 @@
 package com.axon.maven.entities;
 
-import java.util.Date;
+
+import org.joda.time.DateTime;
 
 public class Employee {
 
@@ -9,10 +10,10 @@ public class Employee {
 	private String lastName;
 	private String email;
 	// 从前端传入的是String类型，所以需要注意转换
-	private Date birth;
+	private DateTime birth;
 
 	// 不能被修改
-	private Date createTime;
+	private DateTime createTime;
 	private Department department;
 
 	public Integer getId() {
@@ -39,19 +40,19 @@ public class Employee {
 		this.email = email;
 	}
 
-	public Date getBirth() {
+	public DateTime getBirth() {
 		return birth;
 	}
 
-	public void setBirth(Date birth) {
+	public void setBirth(DateTime birth) {
 		this.birth = birth;
 	}
 
-	public Date getCreateTime() {
+	public DateTime getCreateTime() {
 		return createTime;
 	}
 
-	public void setCreateTime(Date createTime) {
+	public void setCreateTime(DateTime createTime) {
 		this.createTime = createTime;
 	}
 

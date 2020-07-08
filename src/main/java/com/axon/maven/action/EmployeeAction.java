@@ -12,6 +12,7 @@ import com.axon.maven.service.EmployeeService;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 import com.opensymphony.xwork2.Preparable;
+import org.joda.time.DateTime;
 
 public class EmployeeAction extends ActionSupport implements RequestAware, ModelDriven<Employee>, Preparable {
 
@@ -62,7 +63,7 @@ public class EmployeeAction extends ActionSupport implements RequestAware, Model
 
 	public String save() {
 		if (id == null) {
-			model.setCreateTime(new Date());
+			model.setCreateTime(DateTime.now());
 		}
 		employeeService.saveOrUpdate(model);
 		return SUCCESS;

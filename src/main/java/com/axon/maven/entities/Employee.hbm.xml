@@ -12,10 +12,10 @@
 		<property name="email" type="java.lang.String">
 			<column name="EMAIL"></column>
 		</property>
-		<property name="birth" type="java.util.Date">
+		<property name="birth" >
 			<column name="BIRTH"></column>
 		</property>
-		<property name="createTime" type="java.util.Date">
+		<property name="createTime" type="org.jadira.usertype.dateandtime.joda.PersistentLocalDateTime">
 			<column name="CREATE_TIME"></column>
 		</property>
 		<many-to-one name="department" class="com.axon.maven.entities.Department" lazy="false">
